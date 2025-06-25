@@ -17,6 +17,21 @@
             background: #1d4ed8;
             color: #fff;
         }
+        /* Ajuste ancho columnas */
+        .description-column {
+            width: 40%;
+            max-width: 40%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .actions-column {
+            width: 180px;
+            min-width: 180px;
+        }
+        .table th, .table td {
+            vertical-align: middle;
+        }
     </style>
 
     <div class="py-12">
@@ -25,10 +40,10 @@
 
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h1 class="h4 mb-0 d-flex align-items-center gap-1">
-                        <i class="bi bi-bag"></i> Products
+                        <i class="bi bi-bag"></i> @lang('Products')
                     </h1>
                     <a href="{{ route('products.create') }}" class="btn btn-create d-flex align-items-center gap-1">
-                        <i class="bi bi-plus-circle"></i> Create Product
+                        <i class="bi bi-plus-circle"></i> @lang('Create Product')
                     </a>
                 </div>
 
@@ -42,11 +57,11 @@
                     <table class="table table-bordered table-striped align-middle">
                         <thead class="table-light">
                             <tr>
-                                <th>Name</th>
-                                <th>Price</th>
-                                <th>Description</th>
-                                <th>Category</th>
-                                <th style="width: 180px;">Actions</th>
+                                <th>@lang('Name')</th>
+                                <th>@lang('Price')</th>
+                                <th class="description-column">@lang('Description')</th>
+                                <th>@lang('Category')</th>
+                                <th class="actions-column">@lang('Actions')</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -54,17 +69,17 @@
                             <tr>
                                 <td>{{ $product->name }}</td>
                                 <td>${{ number_format($product->price, 2) }}</td>
-                                <td>{{ $product->description }}</td>
+                                <td class="description-column" title="{{ $product->description }}">{{ $product->description }}</td>
                                 <td>{{ $product->category->name ?? 'N/A' }}</td>
-                                <td>
+                                <td class="actions-column">
                                     <a href="{{ route('products.edit', $product) }}" class="btn btn-sm btn-warning d-inline-flex align-items-center gap-1 mb-1">
-                                        <i class="bi bi-pencil-square"></i> Edit
+                                        <i class="bi bi-pencil-square"></i> @lang('Edit')
                                     </a>
-                                    <form action="{{ route('products.destroy', $product) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this product?');">
+                                    <form action="{{ route('products.destroy', $product) }}" method="POST" class="d-inline" onsubmit="return confirm('@lang('Are you sure you want to delete this product?')');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger d-inline-flex align-items-center gap-1">
-                                            <i class="bi bi-trash"></i> Delete
+                                            <i class="bi bi-trash"></i> @lang('Delete')
                                         </button>
                                     </form>
                                 </td>

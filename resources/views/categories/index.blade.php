@@ -25,6 +25,19 @@
             background-color: #f1f5f9;
             cursor: pointer;
         }
+
+        /* Ajuste ancho columnas */
+        .description-column {
+            width: 40%;
+            max-width: 40%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .actions-column {
+            width: 160px;
+            min-width: 160px;
+        }
     </style>
 
     <div class="py-12">
@@ -33,10 +46,10 @@
 
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h1 class="h4 mb-0 d-flex align-items-center gap-2 text-indigo-600">
-                        <i class="bi bi-tags"></i> Categories
+                        <i class="bi bi-tags"></i> @lang('Categories')
                     </h1>
                     <a href="{{ route('categories.create') }}" class="btn btn-create d-flex align-items-center gap-2">
-                        <i class="bi bi-plus-circle"></i> Create Category
+                        <i class="bi bi-plus-circle"></i> @lang('Create Category')
                     </a>
                 </div>
 
@@ -44,7 +57,7 @@
                     <div class="alert alert-success alert-dismissible fade show d-flex align-items-center" role="alert">
                         <i class="bi bi-check-circle-fill me-2"></i>
                         <div>{{ session('success') }}</div>
-                        <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="@lang('Close')"></button>
                     </div>
                 @endif
 
@@ -52,32 +65,32 @@
                     <table class="table table-bordered table-hover align-middle">
                         <thead class="table-light">
                             <tr>
-                                <th style="width: 30%;">Name</th>
-                                <th>Description</th>
-                                <th style="width: 160px;">Actions</th>
+                                <th style="width: 30%;">@lang('Name')</th>
+                                <th class="description-column">@lang('Description')</th>
+                                <th class="actions-column">@lang('Actions')</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($categories as $category)
                                 <tr>
                                     <td>{{ $category->name }}</td>
-                                    <td>{{ $category->description }}</td>
-                                    <td>
+                                    <td class="description-column" title="{{ $category->description }}">{{ $category->description }}</td>
+                                    <td class="actions-column">
                                         <a href="{{ route('categories.edit', $category) }}" class="btn btn-sm btn-warning d-inline-flex align-items-center gap-1 mb-1">
-                                            <i class="bi bi-pencil-square"></i> Edit
+                                            <i class="bi bi-pencil-square"></i> @lang('Edit')
                                         </a>
                                         <form action="{{ route('categories.destroy', $category) }}" method="POST" class="d-inline delete-form">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger d-inline-flex align-items-center gap-1">
-                                                <i class="bi bi-trash"></i> Delete
+                                                <i class="bi bi-trash"></i> @lang('Delete')
                                             </button>
                                         </form>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="3" class="text-center text-muted fst-italic">No categories found.</td>
+                                    <td colspan="3" class="text-center text-muted fst-italic">@lang('Empty')</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -92,7 +105,7 @@
     <script>
         document.querySelectorAll('.delete-form').forEach(form => {
             form.addEventListener('submit', function(e) {
-                if (!confirm('Are you sure you want to delete this category?')) {
+                if (!confirm('@lang("Confirm Delete")')) {
                     e.preventDefault();
                 }
             });
